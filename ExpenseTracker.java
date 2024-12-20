@@ -17,6 +17,7 @@ public class ExpenseTracker{
 
     }
     static ArrayList<Expense> list = new ArrayList<>();
+    static double budget = 0.0;
     public static void main (String[] args){
 
         Scanner sc = new Scanner(System.in);
@@ -28,7 +29,10 @@ public class ExpenseTracker{
             case 1:
                 addExpense(sc);
                 break;
-        
+            case 4:
+                setBudget(sc);
+                break;
+             
             default:
             System.out.println("Invalid Choice, Try again!!! ");
                 break;
@@ -84,6 +88,16 @@ public class ExpenseTracker{
         System.out.println("Expense added successfully!");
 
 
+    }
+    private static void setBudget(Scanner scanner) {
+        System.out.println("=================================================");
+        System.out.println("               SET BUDGET");
+        System.out.println("=================================================");
+        System.out.print("Enter your monthly budget: ");
+        budget = scanner.nextDouble();
+        System.out.println("-------------------------------------------------");
+        System.out.println("Budget updated successfully!");
+        System.out.println("-------------------------------------------------");
     }
     
     
