@@ -1,6 +1,22 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ExpenseTracker{
+    static class Expense{
+        String category;
+        String date;
+        String description;
+        double amount;
+    
+        Expense(String c,String d, String des, double a){
+            this.category = c;
+            this.date = d;
+            this.description = des;
+            this.amount = a;
+        }
+
+    }
+    static ArrayList<Expense> list = new ArrayList<>();
     public static void main (String[] args){
 
         Scanner sc = new Scanner(System.in);
@@ -19,6 +35,7 @@ public class ExpenseTracker{
         }
         
      }
+     
     
     }
 
@@ -37,6 +54,9 @@ public class ExpenseTracker{
         System.out.print("Enter your choice : ");
 
     }
+    /**
+     * @param sc
+     */
     private static void addExpense(Scanner sc) {
         System.out.println("---------- Add Expense ----------\n");
         System.out.println("Enter expense details:");
@@ -58,9 +78,11 @@ public class ExpenseTracker{
         System.out.print("Description: ");
         String description = sc.nextLine();
         
+        list.add(new Expense(category, date, description, amount));
         // Success message
         System.out.println("-------------------------------------------------");
         System.out.println("Expense added successfully!");
+
 
     }
     
