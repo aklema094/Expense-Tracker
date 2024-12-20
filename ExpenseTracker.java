@@ -14,6 +14,10 @@ public class ExpenseTracker{
             this.description = des;
             this.amount = a;
         }
+        @Override
+    public String toString() {
+        return String.format("%-12s | %-10s | %-8.2f | %s", date, category, amount, description);
+    }
 
     }
     static ArrayList<Expense> list = new ArrayList<>();
@@ -29,13 +33,19 @@ public class ExpenseTracker{
             case 1:
                 addExpense(sc);
                 break;
+            case 2: 
+                 viewExpenses();
+                 break;    
             case 4:
                 setBudget(sc);
                 break;
              
+            case 5:
+                System.out.println("Thank you for using Expense Tracker. Goodbye!");
+                return;
             default:
-            System.out.println("Invalid Choice, Try again!!! ");
-                break;
+                System.out.println("Invalid choice! Please try again.");
+                
         }
         
      }
@@ -88,6 +98,23 @@ public class ExpenseTracker{
         System.out.println("Expense added successfully!");
 
 
+    }
+    private static void viewExpenses() {
+        if (list.isEmpty()) {
+            System.out.println("No expenses recorded yet!");
+            return;
+        }
+
+        System.out.println("=================================================");
+        System.out.println("              VIEW EXPENSES");
+        System.out.println("=================================================");
+        System.out.println("Date         | Category   | Amount   | Description");
+        System.out.println("-------------------------------------------------");
+        for (Expense expense : list) {
+            System.out.println(expense);
+        }
+        System.out.println("-------------------------------------------------");
+        System.out.println("Total Expenses");
     }
     private static void setBudget(Scanner scanner) {
         System.out.println("=================================================");
