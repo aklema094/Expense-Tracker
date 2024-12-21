@@ -14,6 +14,22 @@ public class ExpenseTracker{
             this.description = des;
             this.amount = a;
         }
+        public String getCategory() {
+            return category;
+        }
+    
+        public double getAmount() {
+            return amount;
+        }
+    
+        public String getDate() {
+            return date;
+        }
+    
+        public String getDescription() {
+            return description;
+        }
+    
         @Override
     public String toString() {
         return String.format("%-12s | %-10s | %-8.2f | %s", date, category, amount, description);
@@ -35,7 +51,10 @@ public class ExpenseTracker{
                 break;
             case 2: 
                  viewExpenses();
-                 break;    
+                 break; 
+            case 3:
+                 generateReport();
+                 break;   
             case 4:
                 setBudget(sc);
                 break;
@@ -77,7 +96,8 @@ public class ExpenseTracker{
         
         // Input for category
         System.out.print("Category (e.g., Food, Rent, Utilities): ");
-        String category = sc.next(); 
+        String category = sc.next();
+        sc.nextLine(); 
         
         // Input for amount
         System.out.print("Amount: ");
@@ -99,6 +119,7 @@ public class ExpenseTracker{
 
 
     }
+    // view expenses
     private static void viewExpenses() {
         if (list.isEmpty()) {
             System.out.println("No expenses recorded yet!");
@@ -114,7 +135,39 @@ public class ExpenseTracker{
             System.out.println(expense);
         }
         System.out.println("-------------------------------------------------");
-        System.out.println("Total Expenses");
+        System.out.println("Total Expenses : ");
+    }
+    // generate report
+    private static void generateReport() {
+        if (list.isEmpty()) {
+            System.out.println("No expenses recorded yet! Add some expenses first.");
+            return;
+        }
+
+        System.out.println("=================================================");
+        System.out.println("               EXPENSE REPORT");
+        System.out.println("=================================================");
+        System.out.printf("%-12s | %-10s%n", "Category", "Total Amount");
+        System.out.println("-------------------------------------------------");
+        double totalExpenses = 0.0;
+        for (String category : new String[]{"Food", "Rent", "Utilities", "Other"}) {
+            double categoryTotal = list.stream()
+                    .filter(e -> e.getCategory().equalsIgnoreCase(category))
+                    .mapToDouble(Expense::getAmount)
+                    .sum();
+            if (categoryTotal > 0) {
+                System.out.printf("%-12s | %-10.2f%n", category, categoryTotal);
+           }
+            totalExpenses += categoryTotal;
+
+        }
+        System.out.println("-------------------------------------------------");
+        System.out.printf("Total Expenses: %.2f%n", totalExpenses);
+        System.out.printf("Budget: %.2f%n", budget);
+        System.out.printf("Remaining: %.2f%n", budget - totalExpenses);
+        System.out.println("-------------------------------------------------");
+        System.out.println(budget >= totalExpenses ? "✅ Within Budget" : "❌ Over Budget");
+        System.out.println("-------------------------------------------------");
     }
     private static void setBudget(Scanner scanner) {
         System.out.println("=================================================");
@@ -126,6 +179,5 @@ public class ExpenseTracker{
         System.out.println("Budget updated successfully!");
         System.out.println("-------------------------------------------------");
     }
-    
     
 }
